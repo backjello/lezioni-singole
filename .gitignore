@@ -1,0 +1,21 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+INSTRUCTIONS.md
+
+# Ignore editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+**/node_modules/
+**/.env
+
+
+
+
+
+
+
+

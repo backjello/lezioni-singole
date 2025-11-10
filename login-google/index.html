@@ -1,0 +1,51 @@
+<html>
+
+<body>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script>
+        async function handleCredentialResponse(response) {
+            try {
+                const result = await fetch('http://localhost:3333/login-with-google', {
+                    method: 'POST',
+                    mode: "cors",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        token: response.credential
+                    }),
+                });
+                const data = await result.json();
+                if (data.success) {
+                    console.log('Login successful!', data.user);
+                    alert(`Welcome, ${data.user.name}!`);
+                } else {
+                    console.error('Login failed:', data.error);
+                    alert('Login failed: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during login');
+            }
+        }
+        window.onload = async function () {
+            google.accounts.id.initialize({
+                client_id: "48315565897-6i3403uof617avnel62iu3jhcqo70u81.apps.googleusercontent.com",
+                scopes: ['email'],
+                scope: ['email'],
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("buttonDiv"),
+                { theme: "outline", size: "large" }  // customization attributes
+            );
+            google.accounts.id.prompt(); // also display the One Tap dialog
+
+        }
+    </script>
+    <div id="buttonDiv"></div>
+
+    <body>
+
+</html>
