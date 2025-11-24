@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // stabilisco una connessione con il socket server e creo una instanza della socket 
+        const socketIo = io('http://localhost:3334')
+        // quando avviene la connessione stampo un messaggio
+        socketIo.on('connect', () => console.log('connessione effettuata con successo'))
+
+        // function eventoDiTest() {
+        //     socketIo.emit('evento-di-test', { prova: 'test' })
+        // }
+
+        // socketIo.on('evento-di-prova', () => console.log('il server mi ha mandato un evento'))
+
+        function chiama(numero) {
+            socketIo.emit('chiama', numero)
+        }
+    </script>
+
+    <!-- <button onclick="eventoDiTest()">Invia evento di test</button> -->
+
+    <div>
+        Mario Rossi - esami del sangue #001 <button onclick="chiama('#001')">Chiama</button>
+    </div>
+    <div>
+        Luigi Verdi - visita cardiologica #002 <button onclick="chiama('#002')">Chiama</button>
+    </div>
+    <div>
+        Luigino Verdini - visita ortopedia #003 <button onclick="chiama('#003')">Chiama</button>
+    </div>
+    <div>
+        Franco Bianchi - visita dermatologica #004 <button onclick="chiama('#004')">Chiama</button>
+    </div>
+
+</body>
+
+</html>

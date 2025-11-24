@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // stabilisco una connessione con il socket server e creo una instanza della socket 
+        const socketIo = io('http://localhost:3334')
+        // quando avviene la connessione stampo un messaggio
+        socketIo.on('connect', () => console.log('connessione effettuata con successo'))
+
+        socketIo.on('mostra-numero', (numero) => {
+            const div = document.getElementById('tabellone')
+
+            div.innerHTML = numero
+        })
+    </script>
+
+    <div id="tabellone" style="font-size: 100px;"></div>
+
+
+</body>
+
+</html>
