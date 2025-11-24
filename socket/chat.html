@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // stabilisco una connessione con il socket server e creo una instanza della socket 
+        const socketIo = io('http://localhost:3334')
+        // quando avviene la connessione stampo un messaggio
+        socketIo.on('connect', () => console.log('connessione effettuata con successo'))
+
+        function inviaMessaggio() {
+            const testo = document.getElementById('testo').value
+            const nome = document.getElementById('nome').value
+            socketIo.emit('invia-messaggio', { testo, nome })
+        }
+
+        socketIo.on('messaggio-ricevuto', (data) => {
+            const msgBox = document.getElementById('msg')
+            msgBox.innerHTML += ` 
+            <b>${data.nome}</b><br>
+            ${data.testo}
+            `
+        })
+
+    </script>
+
+    <div id="msg"></div>
+
+    Digita il tuo nome:
+    <input type="text" id="nome">
+    Il tuo messaggio:
+    <textarea id="testo"></textarea>
+    <button onclick="inviaMessaggio()">Invia</button>
+
+</body>
+
+</html>

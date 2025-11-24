@@ -47,4 +47,9 @@ io.on('connection', (socket) => {
     socket.on('disconnect', (socket) => {
         console.log('socket disconnessa', socket.id)
     })
+
+
+    socket.on('invia-messaggio', (data) => {
+        io.emit('messaggio-ricevuto', data)
+    })
 })
