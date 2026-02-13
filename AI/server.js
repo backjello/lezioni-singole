@@ -2,7 +2,7 @@ import OpenAi from 'openai'
 import { zodResponseFormat } from 'openai/helpers/zod'
 import { z } from 'zod/v3'
 
-const key = ""
+const key = "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"
 
 // creo il client per la comunicazione con il BE di openAI
 const client = new OpenAi({
