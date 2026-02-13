@@ -1,1 +1,1 @@
-integrare l'AI in un progetto
+web scraping e automatizzione input con puppeteer.js

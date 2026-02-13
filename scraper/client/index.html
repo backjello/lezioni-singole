@@ -10,14 +10,14 @@
 <body>
 
     <script>
-        // GET semplice
-        async function get() {
-            const res = await fetch('http://localhost:3333/proxy?url=' + encodeURIComponent('https://hades.subito.it/v1/search/items?c=44&r=4&ci=1&t=s&qso=false&ndo=false&shp=false&urg=false&sort=datedesc&lim=30&start=30'))
-            const data = await res.json();
+        const url = "https://hades.subito.it/v1/search/items?q=vespa&c=3&t=s&qso=false&ndo=false&shp=false&urg=false&sort=datedesc&lim=30&start=0"
+        async function main() {
+            const response = await fetch('http://localhost:3333/proxy?url=' + encodeURIComponent(url));
+            console.log('Response from server:', response);
+            const data = await response.json();
             console.log(data);
-
         }
-        get();
+        main();
     </script>
 
 </body>
