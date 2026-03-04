@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "name": "telegram-amazon-tracker",
+  "version": "1.0.0",
+  "main": "telegram-amazon-bot.js",
+  "scripts": {
+    "start": "node telegram-amazon-bot.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "puppeteer": "^24.37.2"
+  }
+}
+
