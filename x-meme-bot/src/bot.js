@@ -130,13 +130,13 @@ async function generateMeme(browser, topic) {
             ctx.roundRect(margin, margin, w - margin * 2, h - margin * 2, 32);
             ctx.fill();
 
-            const topic = "${safeTopic}";
+            const topic = "${safeTopic.slice(0, 50)}";
 
             ctx.fillStyle = '#f9fafb';
             ctx.textAlign = 'center';
 
             ctx.font = 'bold 52px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-            ctx.fillText('QUANDO IL TREND DICE', w / 2, 150);
+            ctx.fillText('ULTIME NOTIZIE', w / 2, 150);
 
             ctx.font = '900 64px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
             const maxWidth = w - 160;
@@ -165,7 +165,7 @@ async function generateMeme(browser, topic) {
 
             ctx.font = 'bold 40px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
             ctx.fillStyle = '#a5b4fc';
-            ctx.fillText('#XMEMEBOT', w / 2, h - 120);
+            ctx.fillText('#TRENDBOT', w / 2, h - 120);
 
             document.body.setAttribute('data-rendered', 'true');
           })();
