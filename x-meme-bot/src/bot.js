@@ -7,34 +7,35 @@ const OUTPUT_DIR = path.join(__dirname, "..", "output");
 const KEYWORDS = ["crisi", "crisis", "caldo", "heat", "ai", "AI"];
 
 async function getTrendingTopicsWithPuppeteer(browser) {
-  console.log(
-    'Leggo i trending topic da Google Trends (pagina "Di tendenza ora", senza login)...',
-  );
+  console.log('Leggo i titoli delle notizie da ANSA (homepage, senza login)...');
   const page = await browser.newPage();
 
-  await page.goto("https://trends.google.it/trending?geo=IT&hl=it", {
+  await page.goto("https://www.ansa.it/", {
     waitUntil: "networkidle2",
   });
 
-  // La struttura HTML può cambiare spesso. Qui cerchiamo la tabella principale
-  // che contiene "Tendenze di ricerca" e leggiamo la prima colonna (Termini di tendenza).
+  // La struttura HTML può cambiare spesso. Qui proviamo a raccogliere i titoli
+  // principali dalle sezioni news / articoli.
   const topics = await page.evaluate(() => {
     const out = new Set();
-    const tables = Array.from(document.querySelectorAll("table"));
+    // Titoli principali in vari layout possibili
+    const selectors = [
+      "article h1",
+      "article h2",
+      "article h3",
+      ".news h2",
+      ".news h3",
+      ".top-news h2",
+      ".top-news h3",
+      "h2 a",
+      "h3 a",
+    ];
 
-    tables.forEach((table) => {
-      const text = (table.textContent || "").toLowerCase();
-      if (!text.includes("tendenze di ricerca")) return;
-
-      const rows = table.querySelectorAll("tbody tr");
-      rows.forEach((row) => {
-        const firstCell = row.querySelector("td:first-child");
-        if (!firstCell) return;
-        const candidate = (
-          firstCell.querySelector("a, span, div")?.textContent || ""
-        ).trim();
-        if (candidate && candidate.length < 100) {
-          out.add(candidate);
+    selectors.forEach((sel) => {
+      document.querySelectorAll(sel).forEach((el) => {
+        const text = (el.textContent || "").replace(/\s+/g, " ").trim();
+        if (text && text.length > 20 && text.length < 140) {
+          out.add(text);
         }
       });
     });
@@ -44,10 +45,7 @@ async function getTrendingTopicsWithPuppeteer(browser) {
 
   await page.close();
 
-  console.log(
-    "Trending topic trovati (scraping pagina Google Trends):",
-    topics,
-  );
+  console.log("Titoli trovati (scraping homepage ANSA):", topics);
   return topics;
 }
 
